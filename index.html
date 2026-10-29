@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tally</title>
 <meta name="description" content="Music finance tracker: motions, invoices and reconciliation against the RM Finance ledger.">
-<meta name="theme-color" content="#262628">
+<meta name="theme-color" content="#ffffff">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/favicon-64.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -24,51 +24,76 @@
     </div>
   </div>
   <div class="status">
+    <button id="btnReconnect" class="ghost" hidden>Reconnect Finance folder</button>
     <span id="saveState" class="pill">no file</span>
     <button id="btnSave" class="brass" title="Save to data file">Save</button>
   </div>
 </header>
 
 <nav id="tabs">
-  <button data-tab="register" class="active">Register</button>
-  <button data-tab="motions">Motions</button>
-  <button data-tab="budget">Budget</button>
-  <button data-tab="reconcile">Reconcile</button>
+  <button data-tab="register" class="active">Register<span class="badge" id="needBadge" hidden></span></button>
+  <button data-tab="motions">Motions<span class="badge warn" id="motBadge" hidden></span></button>
+  <button data-tab="budget">Budget<span class="badge warn" id="msgBadge" hidden></span></button>
+  <button data-tab="reconcile">Reconcile<span class="badge" id="recBadge" hidden></span></button>
   <button data-tab="data">Data</button>
 </nav>
 
 <main>
   <!-- REGISTER -->
   <section id="register" class="tab active">
+    <div class="banner" id="folderBanner"><span id="folderBannerText">Your Finance folder is not connected, so invoice files can't open or attach.</span><button class="brass" id="btnBannerConnect">Connect folder</button></div>
+    <details class="entry" id="entry">
+    <summary id="entrySummary">Add an invoice</summary>
     <form id="invForm" autocomplete="off">
       <div class="grid">
+        <div class="dropzone" id="formDrop">
+          <span class="fname" id="formFileName">No invoice file yet</span>
+          <span class="hint" id="formFileHint">Drop the PDF here, or</span>
+          <button type="button" class="small" id="btnPickFormFile">Choose file</button>
+          <button type="button" class="small" id="btnPreviewFormFile" hidden>Preview</button>
+          <button type="button" class="small danger" id="btnUnlinkFormFile" hidden>Unlink</button>
+        </div>
         <label>Date<input type="date" id="f-date" required></label>
-        <label>Vendor<input type="text" id="f-vendor" required placeholder="e.g. Chloe Turner"></label>
+        <label>Vendor<input type="text" id="f-vendor" required placeholder="e.g. Chloe Turner" list="vendorList"></label>
         <label class="wide">Description<input type="text" id="f-desc" placeholder="e.g. Bassoon reeds"></label>
         <label>PO / Order<input type="text" id="f-po" placeholder="538681"></label>
         <label>Invoice no.<input type="text" id="f-inv" placeholder="INV-1185"></label>
         <label>Card (PC no.)<input type="text" id="f-card" placeholder="PC2524"></label>
-        <label>MSG Motion<select id="f-motion"></select></label>
-        <label>Gross (AUD)<input type="number" step="0.01" id="f-gross" required placeholder="0.00"></label>
-        <label>GST<input type="number" step="0.01" id="f-gst" placeholder="0.00"></label>
-        <label>Status<select id="f-doc">
+        <label>MSG Motion<select id="f-motion"></select><span id="motionWarn" class="warnline"></span></label>
+        <label>Gross (AUD, incl GST)<input type="number" step="0.01" id="f-gross" required placeholder="0.00"></label>
+        <label>GST<span class="inrow"><input type="number" step="0.01" id="f-gst" placeholder="0.00"><button type="button" id="btnGst" title="Set GST to 1/11 of gross">1/11</button></span></label>
+        <label>Check flag<select id="f-doc">
           <option>Documented</option><option>Check</option><option>Missing</option></select></label>
-        <label>Paid?<select id="f-paid"><option value="true">Paid</option><option value="false">Unpaid</option></select></label>
-        <label class="wide">Notes<input type="text" id="f-notes" placeholder="e.g. MSG reimbursable"></label>
+        <label>Stage<select id="f-paid"><option value="paid">Paid</option><option value="unpaid">Invoiced, unpaid</option><option value="committed">Committed (PO raised, not invoiced yet)</option></select></label>
+        <label class="chk wide"><input type="checkbox" id="f-sent"> MSG reimbursement invoice sent to accounts</label>
+        <label class="chk wide"><input type="checkbox" id="f-reimb"> MSG reimbursement confirmed paid by accounts</label>
+        <label class="full">Notes<input type="text" id="f-notes" placeholder="e.g. MSG reimbursable"></label>
       </div>
+      <datalist id="vendorList"></datalist>
       <div class="formbar">
         <button type="submit" class="brass" id="btnAdd">Add invoice</button>
         <button type="button" id="btnClear" class="ghost">Clear</button>
         <span id="editing" class="editing"></span>
       </div>
     </form>
+    </details>
     <div class="tablewrap">
       <div class="tabletop">
-        <input type="search" id="q" placeholder="Filter vendor / description / PO / invoice / card / motion">
+        <div class="chips" id="chips">
+          <button class="chip active" data-f="all">All<span class="n" id="n-all"></span></button>
+          <button class="chip" data-f="need">Needs invoice file<span class="n" id="n-need"></span></button>
+          <button class="chip" data-f="check">Flagged to check<span class="n" id="n-check"></span></button>
+          <button class="chip" data-f="msg">MSG not yet reimbursed<span class="n" id="n-msg"></span></button>
+        </div>
+        <input type="search" id="q" placeholder="Search vendor, description, PO, invoice, card, motion">
+        <button id="btnScan" class="ghost" title="Look through your Finance folder for invoice files that match unlinked rows">Find invoice files in folder</button>
+      </div>
+      <div class="tabletop" style="padding-top:6px;padding-bottom:6px">
         <span id="regcount" class="muted"></span>
+        <span class="muted">Tip: drag a PDF straight onto any row to attach it.</span>
       </div>
       <table id="regTable"><thead><tr>
-        <th>Date</th><th>Vendor</th><th>Description</th><th>PO</th><th>Invoice</th><th>Card</th><th>Motion</th><th class="num">Gross</th><th>Doc</th><th>File</th><th>Paid</th><th></th>
+        <th>Date</th><th>Vendor / description</th><th>References</th><th class="num">Gross</th><th>Invoice file</th><th>Paid</th><th title="MSG reimbursement: Sent to accounts / Reimbursed">MSG reimb</th><th></th>
       </tr></thead><tbody></tbody></table>
     </div>
   </section>
@@ -77,7 +102,8 @@
   <section id="motions" class="tab">
     <div class="tablewrap">
       <h2>Motion tally <span class="muted" id="motionYear"></span></h2>
-      <p class="muted">Spent = sum of register invoices mapped to each motion. Over-allocation shows in oxblood.</p>
+      <p class="muted">Spent = register invoices mapped to each motion (gross), including committed POs. Amber = 85% or more used; red = over allocation.</p>
+      <div class="cards" id="motCards" style="padding:0 16px 12px"></div>
       <table id="motTable"><thead><tr>
         <th>Motion</th><th>Purpose</th><th class="num">Allocation</th><th class="num">Spent</th><th class="num">Remaining</th><th class="bar">Used</th><th class="num">Lines</th><th></th>
       </tr></thead><tbody></tbody></table>
@@ -94,6 +120,19 @@
   <section id="budget" class="tab">
     <div class="cards" id="budgetCards"></div>
     <p class="muted" id="budgetNote"></p>
+    <div class="tablewrap">
+      <h2>MSG reimbursements to chase</h2>
+      <p class="muted">Every MSG-funded item D5720 is still fronting. Ages count from the invoice date (not yet sent) or the date you ticked Sent.</p>
+      <div class="tabletop">
+        <div class="chips" id="msgChips">
+          <button class="chip active" data-m="unsent">Not yet sent to MSG<span class="n" id="n-unsent"></span></button>
+          <button class="chip" data-m="sent">Sent, awaiting MSG<span class="n" id="n-sent"></span></button>
+        </div>
+        <span class="muted" id="msgTotal"></span>
+        <button class="ghost" id="btnCopyMsg" title="Copy this list as text, ready to paste into an email to accounts">Copy list for email</button>
+      </div>
+      <table id="msgTable"><thead><tr><th>Date</th><th>Vendor / description</th><th>Motion</th><th class="num">Gross</th><th class="num">Waiting</th><th></th></tr></thead><tbody></tbody></table>
+    </div>
     <div class="tablewrap">
       <h2>D5720 allocations</h2>
       <table id="allocTable"><thead><tr><th>Description</th><th>Date</th><th class="num">Amount</th><th></th></tr></thead><tbody></tbody></table>
@@ -115,12 +154,17 @@
     </div>
     <div class="cards" id="recCards"></div>
     <div class="tablewrap">
-      <h2>Ledger lines not matched to a logged invoice</h2>
-      <table id="recLedger"><thead><tr><th>Date</th><th>Vendor</th><th>Description</th><th>Invoice</th><th class="num">Gross</th></tr></thead><tbody></tbody></table>
+      <div class="tabletop"><h2 style="padding:0">Ledger lines not in the register</h2><button class="brass" id="btnAddAllLedger">Add all to register</button></div>
+      <table id="recLedger"><thead><tr><th>Date</th><th>Vendor</th><th>Description</th><th>Order / invoice</th><th class="num">Gross</th><th></th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="tablewrap">
+      <h2>Matched, but the amounts differ</h2>
+      <p class="muted">Same invoice or PO number in both, different totals. Usually a typo, a part-payment, or a missing freight/booking-fee line.</p>
+      <table id="recDiff"><thead><tr><th>Vendor</th><th>Refs</th><th class="num">Register</th><th class="num">Ledger</th><th class="num">Difference</th><th></th></tr></thead><tbody></tbody></table>
     </div>
     <div class="tablewrap">
       <h2>Logged invoices not yet on the ledger</h2>
-      <table id="recReg"><thead><tr><th>Date</th><th>Vendor</th><th>Invoice</th><th class="num">Gross</th><th>Paid</th></tr></thead><tbody></tbody></table>
+      <table id="recReg"><thead><tr><th>Date</th><th>Vendor</th><th>Invoice</th><th class="num">Gross</th><th>Stage</th></tr></thead><tbody></tbody></table>
     </div>
   </section>
 
@@ -132,21 +176,44 @@
       <button id="btnExport" class="ghost">Export reconciliation (.xlsx)</button>
       <button id="btnOpen" class="ghost">Open a data file</button>
       <button id="btnNewYear" class="ghost">Start new year</button>
-      <button id="btnReseed" class="ghost">Reload 2026 sample</button>
     </div>
     <p class="muted" id="wsStatus"></p>
     <p class="muted" id="dataNote"></p>
+    <label class="chk" style="margin:6px 0 4px"><input type="checkbox" id="optAutosave" checked> Autosave to the Finance folder after every change</label>
     <div class="tablewrap">
       <h2>How this holds your data</h2>
       <ul class="notes">
         <li>Pick your <b>Finance folder</b> once as the workspace. The app keeps <b>tally-data.json</b> there as the single source of truth, and reads and writes your invoice PDFs straight from it. No copies live inside the browser.</li>
-        <li>Each invoice row has a <b>File</b> cell: <b>Open</b> opens the linked PDF, <b>Attach</b> copies a new PDF into the <b>Invoices</b> subfolder and links it. The 2026 entries are already linked to the files we renamed.</li>
-        <li>Grant the folder access when Chrome asks (once per session). The pill up top says <b>unsaved</b> until you Save. Do that before closing.</li>
+        <li>Each row's <b>Invoice file</b> shows green when its own invoice is attached, amber when it only points at a combined scan or a file shared with another row, and red dashed when nothing is attached. Click it to preview, or to attach.</li>
+        <li>To attach: drag a PDF onto the row, click the red <b>Attach</b>, or drop it into the add/edit form. The file is copied into the <b>Invoices</b> subfolder and renamed in your usual pattern, e.g. <i>Invoice - 2026-05-05 - Harry Oliff - Arts Day Sound Tech ($500) (INV-4034, PO538668).pdf</i>.</li>
+        <li><b>Find invoice files in folder</b> scans the Finance folder for PDFs that aren't linked yet and suggests matches by invoice number, PO and amount. You confirm each link.</li>
+        <li>Grant the folder access when Chrome asks (once per session). With autosave on, every change is written to tally-data.json a second later; the pill shows the time of the last save.</li>
+        <li><b>Start new year</b> first saves an archive copy (e.g. tally-2026.json) into the Finance folder, then clears invoices, ledger and allocations. Committed POs are carried into the new year.</li>
       </ul>
     </div>
+    <details class="entry" style="margin-top:18px">
+      <summary>Advanced</summary>
+      <div style="padding:0 16px 16px">
+        <p class="muted">Replaces everything on screen with the original 2026 sample. Only useful for testing; your real data is lost unless it's saved in the Finance folder.</p>
+        <button id="btnReseed" class="danger">Reload 2026 sample…</button>
+      </div>
+    </details>
   </section>
 </main>
 
+<div class="modal" id="previewModal"><div class="box">
+  <div class="mhead"><span class="t" id="pvName"></span>
+    <button class="small" id="pvReplace">Replace file</button>
+    <button class="small" id="pvTab">Open in new tab</button>
+    <button class="small" id="pvClose">Close</button></div>
+  <div class="mbody" id="pvBody"></div>
+</div></div>
+<div class="modal" id="scanModal"><div class="box">
+  <div class="mhead"><span class="t" id="scanTitle">Matching invoice files</span>
+    <button class="small brass" id="scanLinkStrong">Link all strong matches</button>
+    <button class="small" id="scanClose">Close</button></div>
+  <div class="mbody"><table class="matchlist"><thead><tr><th>Register row</th><th>Suggested file</th><th>Match</th><th></th></tr></thead><tbody id="scanBody"></tbody></table></div>
+</div></div>
 <div id="toast" class="toast"></div>
 <script src="xlsx.full.min.js"></script>
 <script src="app.js"></script>

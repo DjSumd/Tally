@@ -129,7 +129,9 @@
    "paid": true,
    "docStatus": "Check",
    "notes": "",
-   "file": "Invoices/Report - 2026-06-04 - All Invoices (combined scan).pdf"
+   "file": "Invoices/Report - 2026-06-04 - All Invoices (combined scan).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-03-30",
@@ -144,7 +146,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-04-22",
@@ -159,7 +163,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoice - 2026-03-25 - The Funk Factory - Junkadelic Incursion ($1760) (INV-1185).pdf"
+   "file": "Invoice - 2026-03-25 - The Funk Factory - Junkadelic Incursion ($1760) (INV-1185).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-04-22",
@@ -174,7 +180,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-04-22",
@@ -189,7 +197,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice 49115/Invoice - 2026-03-31 - Chloe Turner - Bassoon Reeds ($480) (PO538681).pdf"
+   "file": "Invoices/Invoice 49115/Invoice - 2026-03-31 - Chloe Turner - Bassoon Reeds ($480) (PO538681).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-04-30",
@@ -204,7 +214,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoice - 2026-03-03 - Virgin Australia - Airfare R. Keenan (Artist in Residence).pdf"
+   "file": "Invoice - 2026-03-03 - Virgin Australia - Airfare R. Keenan (Artist in Residence).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-04-30",
@@ -219,7 +231,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-03-05 - Ozwinds - Bass Clarinet Mouthpiece ($116.10) (INV-000076803).pdf"
+   "file": "Invoices/Invoice - 2026-03-05 - Ozwinds - Bass Clarinet Mouthpiece ($116.10) (INV-000076803).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-04-30",
@@ -234,7 +248,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice 49113/Receipt - 2026-03-17 - C.L. Barnhouse - Six Note Symphony ($86.82).pdf"
+   "file": "Invoices/Invoice 49113/Receipt - 2026-03-17 - C.L. Barnhouse - Six Note Symphony ($86.82).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-04-30",
@@ -249,7 +265,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice 49114/Receipt - 2026-03-18 - BJE Music - God Defend New Zealand ($10).pdf"
+   "file": "Invoices/Invoice 49114/Receipt - 2026-03-18 - BJE Music - God Defend New Zealand ($10).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-04-30",
@@ -264,7 +282,9 @@
    "paid": true,
    "docStatus": "Check",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-05-29",
@@ -279,7 +299,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-05-29",
@@ -294,7 +316,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-04-23 - eJazzLines - Sheet Music (Order 3094482).pdf"
+   "file": "Invoices/Invoice - 2026-04-23 - eJazzLines - Sheet Music (Order 3094482).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-05-29",
@@ -309,7 +333,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-04-24 - Jaycar - Keyboard Adapters (1).pdf"
+   "file": "Invoices/Invoice - 2026-04-24 - Jaycar - Keyboard Adapters (1).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-05-29",
@@ -324,7 +350,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-04-24 - Jaycar - Keyboard Adapters (2).pdf"
+   "file": "Invoices/Invoice - 2026-04-24 - Jaycar - Keyboard Adapters (2).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-06-09",
@@ -339,7 +367,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-05-05 - Harry Oliff - Arts Day Sound Tech ($500) (INV-4034, PO538668).pdf"
+   "file": "Invoices/Invoice - 2026-05-05 - Harry Oliff - Arts Day Sound Tech ($500) (INV-4034, PO538668).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-06-09",
@@ -354,7 +384,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-05-05 - Harry Oliff - CERT III Workshop ($1015) (INV-4035, PO538669).pdf"
+   "file": "Invoices/Invoice - 2026-05-05 - Harry Oliff - CERT III Workshop ($1015) (INV-4035, PO538669).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-06-09",
@@ -369,7 +401,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-05-20 - Sinead O'Hara (BaseMgmt) - Industry Presentation ($200) (INV-00140, PO538743).pdf"
+   "file": "Invoices/Invoice - 2026-05-20 - Sinead O'Hara (BaseMgmt) - Industry Presentation ($200) (INV-00140, PO538743).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-06-09",
@@ -384,7 +418,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-05-22 - Tom Salleo - Piano Accompaniment Oleg ($200) (INV-202605221, PO538732).pdf"
+   "file": "Invoices/Invoice - 2026-05-22 - Tom Salleo - Piano Accompaniment Oleg ($200) (INV-202605221, PO538732).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-06-09",
@@ -399,7 +435,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-05-15 - Harriet Griffiths - Piano Accompaniment Oscar Dix ($467.50) (INV-2503, PO538733).pdf"
+   "file": "Invoices/Invoice - 2026-05-15 - Harriet Griffiths - Piano Accompaniment Oscar Dix ($467.50) (INV-2503, PO538733).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-06-09",
@@ -414,7 +452,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-05-26 - Peter Clark Piano Tuner - Annual Tuning ($1738) (INV-5972).pdf"
+   "file": "Invoices/Invoice - 2026-05-26 - Peter Clark Piano Tuner - Annual Tuning ($1738) (INV-5972).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-01",
@@ -429,7 +469,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-01",
@@ -444,7 +486,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-04-13 - Musical Futures International - Music Tech & AI PD ($242) (INV-10488).pdf"
+   "file": "Invoices/Invoice - 2026-04-13 - Musical Futures International - Music Tech & AI PD ($242) (INV-10488).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-01",
@@ -459,7 +503,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-05-07 - Coles - Batteries & Supplies ($73.80).pdf"
+   "file": "Invoices/Receipt - 2026-05-07 - Coles - Batteries & Supplies ($73.80).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-01",
@@ -474,7 +520,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-05-08 - ABODA WA - Senior Orchestra Festival Registration ($194.23).pdf"
+   "file": "Invoices/Receipt - 2026-05-08 - ABODA WA - Senior Orchestra Festival Registration ($194.23).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-01",
@@ -489,7 +537,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-05-08 - ABODA WA - Senior Orchestra Festival Registration ($194.23).pdf"
+   "file": "Invoices/Receipt - 2026-05-08 - ABODA WA - Senior Orchestra Festival Registration ($194.23).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-01",
@@ -504,7 +554,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-05-11 - eJazzLines - Sheet Music (Order 3094810).pdf"
+   "file": "Invoices/Receipt - 2026-05-11 - eJazzLines - Sheet Music (Order 3094810).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-01",
@@ -519,7 +571,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-05-12 - eJazzLines - Sheet Music (Order 3094811).pdf"
+   "file": "Invoices/Receipt - 2026-05-12 - eJazzLines - Sheet Music (Order 3094811).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-01",
@@ -534,7 +588,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-05-12 - AJEA - Jazz Festival Registration ($528.54).pdf"
+   "file": "Invoices/Receipt - 2026-05-12 - AJEA - Jazz Festival Registration ($528.54).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-01",
@@ -549,7 +605,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-05-12 - AJEA - Jazz Festival Registration ($528.54).pdf"
+   "file": "Invoices/Receipt - 2026-05-12 - AJEA - Jazz Festival Registration ($528.54).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-01",
@@ -564,7 +622,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-05-13 - Classical Guitar Society WA - Guitar Festival Registration ($270).pdf"
+   "file": "Invoices/Receipt - 2026-05-13 - Classical Guitar Society WA - Guitar Festival Registration ($270).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-01",
@@ -579,7 +639,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-31",
@@ -594,7 +656,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-05 - Mannys Online - Harmon Trumpet Mute (INV-4624975).pdf"
+   "file": "Invoices/Invoice - 2026-05 - Mannys Online - Harmon Trumpet Mute (INV-4624975).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-31",
@@ -609,7 +673,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-05-28 - ABODA WA - Concert Band Festival Registration ($194.23).pdf"
+   "file": "Invoices/Receipt - 2026-05-28 - ABODA WA - Concert Band Festival Registration ($194.23).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-31",
@@ -624,7 +690,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-05-28 - ABODA WA - Concert Band Festival Registration ($194.23).pdf"
+   "file": "Invoices/Receipt - 2026-05-28 - ABODA WA - Concert Band Festival Registration ($194.23).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-31",
@@ -639,7 +707,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-06-04 - ABODA WA - Junior Orchestra Festival Registration ($388.46).pdf"
+   "file": "Invoices/Receipt - 2026-06-04 - ABODA WA - Junior Orchestra Festival Registration ($388.46).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-31",
@@ -654,7 +724,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-06-04 - ABODA WA - Junior Orchestra Festival Registration ($388.46).pdf"
+   "file": "Invoices/Receipt - 2026-06-04 - ABODA WA - Junior Orchestra Festival Registration ($388.46).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-31",
@@ -669,7 +741,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-06-04 - ABODA WA - Junior Concert Band Festival Registration ($194.23).pdf"
+   "file": "Invoices/Receipt - 2026-06-04 - ABODA WA - Junior Concert Band Festival Registration ($194.23).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-31",
@@ -684,7 +758,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-06-04 - ABODA WA - Junior Concert Band Festival Registration ($194.23).pdf"
+   "file": "Invoices/Receipt - 2026-06-04 - ABODA WA - Junior Concert Band Festival Registration ($194.23).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-31",
@@ -699,7 +775,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-06-11 - Tempest Music - Bass Clarinet Reeds ($176.90).pdf"
+   "file": "Invoices/Receipt - 2026-06-11 - Tempest Music - Bass Clarinet Reeds ($176.90).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-31",
@@ -714,7 +792,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-06-03 - Woodman Point Camp - 2027 Camp Deposit ($2220) (INV-REC41966).pdf"
+   "file": "Invoices/Invoice - 2026-06-03 - Woodman Point Camp - 2027 Camp Deposit ($2220) (INV-REC41966).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-07-20",
@@ -729,7 +809,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-08-10",
@@ -744,7 +826,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoice - 2026-07-14 - James Dekleva - Piano Accompaniment Eric Ramsay ($150) (PO538745).pdf"
+   "file": "Invoice - 2026-07-14 - James Dekleva - Piano Accompaniment Eric Ramsay ($150) (PO538745).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-08-10",
@@ -759,7 +843,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoice - 2026-06-26 - Simon Jeans - ATAR Technical Work ($350) (PO538950).pdf"
+   "file": "Invoice - 2026-06-26 - Simon Jeans - ATAR Technical Work ($350) (PO538950).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-08-11",
@@ -774,7 +860,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-08-11",
@@ -789,7 +877,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoice - 2026-07-28 - Marcus Roberts - OPUS Workshops (PO538972).pdf"
+   "file": "Invoice - 2026-07-28 - Marcus Roberts - OPUS Workshops (PO538972).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-08-27",
@@ -804,7 +894,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoice - 2026-08-09 - Rob Gladstones - Horn Service ($270) (INV-4316, PO538971).pdf"
+   "file": "Invoice - 2026-08-09 - Rob Gladstones - Horn Service ($270) (INV-4316, PO538971).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-08-28",
@@ -819,7 +911,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-08-28",
@@ -834,7 +928,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-07 - Mannys Online - Music Stands (INV-4705698).pdf"
+   "file": "Invoices/Invoice - 2026-07 - Mannys Online - Music Stands (INV-4705698).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-08-28",
@@ -849,7 +945,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-08-28",
@@ -864,7 +962,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Contract - 2026-07 - Kennards Hire - Mobile Hire Contract (29005274).pdf"
+   "file": "Invoices/Contract - 2026-07 - Kennards Hire - Mobile Hire Contract (29005274).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-08-28",
@@ -879,7 +979,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Contract - 2026-07 - Kennards Hire - Mobile Hire Contract (29005274).pdf"
+   "file": "Invoices/Contract - 2026-07 - Kennards Hire - Mobile Hire Contract (29005274).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-09-23",
@@ -894,7 +996,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-09-23",
@@ -909,7 +1013,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-09-11 - Sarah Saunders - Piano Accompaniment Oscar (INV-725, PO542128).pdf"
+   "file": "Invoices/Invoice - 2026-09-11 - Sarah Saunders - Piano Accompaniment Oscar (INV-725, PO542128).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-10-15",
@@ -924,7 +1030,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoices/Invoice - 2026-09-15 - Tom Salleo - Piano Accompaniment Oleg ($200) (INV-202609151, PO542130).pdf"
+   "file": "Invoices/Invoice - 2026-09-15 - Tom Salleo - Piano Accompaniment Oleg ($200) (INV-202609151, PO542130).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-10-20",
@@ -939,7 +1047,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-10-20",
@@ -954,7 +1064,9 @@
    "paid": true,
    "docStatus": "Check",
    "notes": "",
-   "file": "Invoices/Invoice - 2026 - Pro Photo Booth - Jazz Combo 1 Photo.pdf"
+   "file": "Invoices/Invoice - 2026 - Pro Photo Booth - Jazz Combo 1 Photo.pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-10-20",
@@ -969,7 +1081,9 @@
    "paid": true,
    "docStatus": "Check",
    "notes": "",
-   "file": "Invoices/Invoice - 2026 - Pro Photo Booth - Jazz Combo 1 Photo.pdf"
+   "file": "Invoices/Invoice - 2026 - Pro Photo Booth - Jazz Combo 1 Photo.pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-10-20",
@@ -984,7 +1098,9 @@
    "paid": true,
    "docStatus": "Check",
    "notes": "",
-   "file": "Invoices/Invoice - 2026 - Pro Photo Booth - Big Band 1 Photo.pdf"
+   "file": "Invoices/Invoice - 2026 - Pro Photo Booth - Big Band 1 Photo.pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-10-20",
@@ -999,7 +1115,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-10-20",
@@ -1014,7 +1132,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-10-20",
@@ -1029,7 +1149,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-10-20",
@@ -1044,7 +1166,9 @@
    "paid": true,
    "docStatus": "Check",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-10-20",
@@ -1059,7 +1183,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-10-20",
@@ -1074,7 +1200,9 @@
    "paid": true,
    "docStatus": "Check",
    "notes": "",
-   "file": "Invoices/Receipt - 2026-10-15 - eJazzLines - Sheet Music.pdf"
+   "file": "Invoices/Receipt - 2026-10-15 - eJazzLines - Sheet Music.pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-10-20",
@@ -1089,7 +1217,9 @@
    "paid": true,
    "docStatus": "Documented",
    "notes": "",
-   "file": "Invoice - 2026-08-19 - Optimum Percussion - Percussion Table (INV-IN307741).pdf"
+   "file": "Invoice - 2026-08-19 - Optimum Percussion - Percussion Table (INV-IN307741).pdf",
+   "msgSent": false,
+   "msgPaid": false
   },
   {
    "date": "2026-10-20",
@@ -1104,7 +1234,9 @@
    "paid": true,
    "docStatus": "Missing",
    "notes": "",
-   "file": ""
+   "file": "",
+   "msgSent": false,
+   "msgPaid": false
   }
  ],
  "ledger": [
