@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tally</title>
+<meta name="description" content="Music finance tracker: motions, invoices and reconciliation against the RM Finance ledger.">
+<meta name="theme-color" content="#262628">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon-64.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <div class="brand">
+    <span class="mark" aria-hidden="true">&#8740;&#8740;</span>
+    <div>
+      <h1>Tally</h1>
+      <p class="sub" id="subtitle">Music finance</p>
+    </div>
+  </div>
+  <div class="status">
+    <span id="saveState" class="pill">no file</span>
+    <button id="btnSave" class="brass" title="Save to data file">Save</button>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button data-tab="register" class="active">Register</button>
+  <button data-tab="motions">Motions</button>
+  <button data-tab="budget">Budget</button>
+  <button data-tab="reconcile">Reconcile</button>
+  <button data-tab="data">Data</button>
+</nav>
+
+<main>
+  <!-- REGISTER -->
+  <section id="register" class="tab active">
+    <form id="invForm" autocomplete="off">
+      <div class="grid">
+        <label>Date<input type="date" id="f-date" required></label>
+        <label>Vendor<input type="text" id="f-vendor" required placeholder="e.g. Chloe Turner"></label>
+        <label class="wide">Description<input type="text" id="f-desc" placeholder="e.g. Bassoon reeds"></label>
+        <label>PO / Order<input type="text" id="f-po" placeholder="538681"></label>
+        <label>Invoice no.<input type="text" id="f-inv" placeholder="INV-1185"></label>
+        <label>MSG Motion<select id="f-motion"></select></label>
+        <label>Gross (AUD)<input type="number" step="0.01" id="f-gross" required placeholder="0.00"></label>
+        <label>GST<input type="number" step="0.01" id="f-gst" placeholder="0.00"></label>
+        <label>Status<select id="f-doc">
+          <option>Documented</option><option>Check</option><option>Missing</option></select></label>
+        <label>Paid?<select id="f-paid"><option value="true">Paid</option><option value="false">Unpaid</option></select></label>
+        <label class="wide">Notes<input type="text" id="f-notes" placeholder="e.g. MSG reimbursable"></label>
+      </div>
+      <div class="formbar">
+        <button type="submit" class="brass" id="btnAdd">Add invoice</button>
+        <button type="button" id="btnClear" class="ghost">Clear</button>
+        <span id="editing" class="editing"></span>
+      </div>
+    </form>
+    <div class="tablewrap">
+      <div class="tabletop">
+        <input type="search" id="q" placeholder="Filter vendor / description / invoice / motion">
+        <span id="regcount" class="muted"></span>
+      </div>
+      <table id="regTable"><thead><tr>
+        <th>Date</th><th>Vendor</th><th>Description</th><th>Motion</th><th class="num">Gross</th><th>Doc</th><th>File</th><th>Paid</th><th></th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <!-- MOTIONS -->
+  <section id="motions" class="tab">
+    <div class="tablewrap">
+      <h2>Motion tally <span class="muted" id="motionYear"></span></h2>
+      <p class="muted">Spent = sum of register invoices mapped to each motion. Over-allocation shows in oxblood.</p>
+      <table id="motTable"><thead><tr>
+        <th>Motion</th><th>Purpose</th><th class="num">Allocation</th><th class="num">Spent</th><th class="num">Remaining</th><th class="bar">Used</th><th class="num">Lines</th><th></th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+    <form id="motForm" class="inlineform">
+      <input type="text" id="m-num" placeholder="Motion number e.g. M2027.09.04.01">
+      <input type="text" id="m-desc" placeholder="Purpose">
+      <input type="number" step="1" id="m-alloc" placeholder="Allocation $">
+      <button type="submit" class="brass">Add / update motion</button>
+    </form>
+  </section>
+
+  <!-- BUDGET -->
+  <section id="budget" class="tab">
+    <div class="cards" id="budgetCards"></div>
+    <p class="muted" id="budgetNote"></p>
+    <div class="tablewrap">
+      <h2>D5720 allocations</h2>
+      <table id="allocTable"><thead><tr><th>Description</th><th>Date</th><th class="num">Amount</th><th></th></tr></thead><tbody></tbody></table>
+      <form id="allocForm" class="inlineform">
+        <input type="text" id="a-desc" placeholder="Allocation description">
+        <input type="date" id="a-date">
+        <input type="number" step="0.01" id="a-amt" placeholder="Amount $">
+        <button type="submit" class="brass">Add allocation</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- RECONCILE -->
+  <section id="reconcile" class="tab">
+    <div class="recbar">
+      <label class="filebtn brass">Import RM ledger (.xlsx)
+        <input type="file" id="rmFile" accept=".xlsx,.xls" hidden></label>
+      <span id="ledMeta" class="muted"></span>
+    </div>
+    <div class="cards" id="recCards"></div>
+    <div class="tablewrap">
+      <h2>Ledger lines not matched to a logged invoice</h2>
+      <table id="recLedger"><thead><tr><th>Date</th><th>Vendor</th><th>Description</th><th>Invoice</th><th class="num">Gross</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="tablewrap">
+      <h2>Logged invoices not yet on the ledger</h2>
+      <table id="recReg"><thead><tr><th>Date</th><th>Vendor</th><th>Invoice</th><th class="num">Gross</th><th>Paid</th></tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <!-- DATA -->
+  <section id="data" class="tab">
+    <div class="datagrid">
+      <button id="btnWorkspace" class="brass">Choose Finance folder</button>
+      <button id="btnSave2" class="brass">Save</button>
+      <button id="btnExport" class="ghost">Export reconciliation (.xlsx)</button>
+      <button id="btnOpen" class="ghost">Open a data file</button>
+      <button id="btnNewYear" class="ghost">Start new year</button>
+      <button id="btnReseed" class="ghost">Reload 2026 sample</button>
+    </div>
+    <p class="muted" id="wsStatus"></p>
+    <p class="muted" id="dataNote"></p>
+    <div class="tablewrap">
+      <h2>How this holds your data</h2>
+      <ul class="notes">
+        <li>Pick your <b>Finance folder</b> once as the workspace. The app keeps <b>tally-data.json</b> there as the single source of truth, and reads and writes your invoice PDFs straight from it. No copies live inside the browser.</li>
+        <li>Each invoice row has a <b>File</b> cell: <b>Open</b> opens the linked PDF, <b>Attach</b> copies a new PDF into the <b>Invoices</b> subfolder and links it. The 2026 entries are already linked to the files we renamed.</li>
+        <li>Grant the folder access when Chrome asks (once per session). The pill up top says <b>unsaved</b> until you Save. Do that before closing.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast"></div>
+<script src="xlsx.full.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
