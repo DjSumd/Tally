@@ -1,10 +1,13 @@
 /* Tally service worker - bump CACHE when any cached file changes */
-const CACHE = 'tally-v7';
+const CACHE = 'tally-v8';
 const ASSETS = [
   './',
   './index.html',
   './styles.css',
   './app.js',
+  './reader.js',
+  './lib/pdf.min.js',
+  './lib/pdf.worker.min.js',
   './xlsx.full.min.js',
   './seed.json',
   './manifest.webmanifest',

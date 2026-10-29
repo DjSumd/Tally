@@ -43,7 +43,7 @@
   <section id="register" class="tab active">
     <div class="banner" id="folderBanner"><span id="folderBannerText">Your Finance folder is not connected, so invoice files can't open or attach.</span><button class="brass" id="btnBannerConnect">Connect folder</button></div>
     <details class="entry" id="entry">
-    <summary id="entrySummary">Add an invoice</summary>
+    <summary><span id="entrySummary">Add an invoice</span><span class="muted" style="font-weight:400">· drop a PDF anywhere on this page and it fills itself in</span></summary>
     <form id="invForm" autocomplete="off">
       <div class="grid">
         <div class="dropzone" id="formDrop">
@@ -52,6 +52,8 @@
           <button type="button" class="small" id="btnPickFormFile">Choose file</button>
           <button type="button" class="small" id="btnPreviewFormFile" hidden>Preview</button>
           <button type="button" class="small danger" id="btnUnlinkFormFile" hidden>Unlink</button>
+          <button type="button" class="small" id="btnReread" hidden title="Read the invoice again and overwrite the fields">Read again</button>
+          <div class="readstatus" id="readStatus"></div>
         </div>
         <label>Date<input type="date" id="f-date" required></label>
         <label>Vendor<input type="text" id="f-vendor" required placeholder="e.g. Chloe Turner" list="vendorList"></label>
@@ -93,7 +95,7 @@
         <span class="muted">Tip: drag a PDF straight onto any row to attach it.</span>
       </div>
       <table id="regTable"><thead><tr>
-        <th>Date</th><th>Vendor / description</th><th>References</th><th class="num">Gross</th><th>Invoice file</th><th>Paid</th><th title="MSG reimbursement: Sent to accounts / Reimbursed">MSG reimb</th><th></th>
+        <th>Date</th><th>Vendor / description</th><th>References</th><th class="num">Gross</th><th>Invoice file</th><th>Stage</th><th title="MSG reimbursement: Sent to accounts / Reimbursed">MSG reimb</th><th></th>
       </tr></thead><tbody></tbody></table>
     </div>
   </section>
@@ -216,6 +218,8 @@
 </div></div>
 <div id="toast" class="toast"></div>
 <script src="xlsx.full.min.js"></script>
+<script src="lib/pdf.min.js"></script>
+<script src="reader.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

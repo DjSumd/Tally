@@ -15,6 +15,8 @@ let dirty = false;
 let editId = null;
 let regFilter = 'all';
 let formFile = null;      // File waiting to be attached from the form
+let formMeta = {};        // ABNs read from the invoice
+let autoIds = new Set();  // fields filled by the reader
 let formUnlink = false;   // user unlinked the file in the edit form
 const DIRTY_KEY = 'tally-dirty';
 const hasFS = ('showSaveFilePicker' in window);
@@ -380,7 +382,7 @@ function renderRegister(){
     // drag a file onto the row to attach it
     tr.addEventListener('dragover',e=>{ if(e.dataTransfer && [...e.dataTransfer.types].includes('Files')){ e.preventDefault(); tr.classList.add('dropover'); } });
     tr.addEventListener('dragleave',()=>tr.classList.remove('dropover'));
-    tr.addEventListener('drop',e=>{ e.preventDefault(); tr.classList.remove('dropover'); const f=e.dataTransfer.files[0]; if(f) writeAttachment(i,f); });
+    tr.addEventListener('drop',e=>{ e.preventDefault(); e.stopPropagation(); tr.classList.remove('dropover'); const f=e.dataTransfer.files[0]; if(f) writeAttachment(i,f); });
     tb.appendChild(tr);
   });
   if(!shown) tb.innerHTML='<tr><td colspan="8" class="muted" style="padding:18px">'+(regFilter==='need'?'Every invoice has its own file attached.':'Nothing matches.')+'</td></tr>';
@@ -397,10 +399,49 @@ function loadInvoice(i){
   $('#f-sent').checked=!!x.msgSent; $('#f-reimb').checked=!!x.msgPaid;
   $('#btnAdd').textContent='Update invoice'; $('#editing').textContent='Editing '+(x.vendor||'invoice');
   $('#entrySummary').textContent='Edit invoice';
-  formFile=null; formUnlink=false; showFormFile(); motionWarn();
+  formFile=null; formUnlink=false; formMeta={}; clearAuto(); $('#readStatus').innerHTML=''; showFormFile(); motionWarn();
   $('#entry').open=true; window.scrollTo({top:0,behavior:'smooth'}); setTimeout(()=>$('#f-vendor').focus(),250);
 }
-function clearForm(){ editId=null; formFile=null; formUnlink=false; $('#invForm').reset(); $('#btnAdd').textContent='Add invoice'; $('#editing').textContent=''; $('#entrySummary').textContent='Add an invoice'; showFormFile(); motionWarn(); }
+function clearForm(){ editId=null; formFile=null; formUnlink=false; formMeta={}; clearAuto(); $('#readStatus').innerHTML=''; $('#invForm').reset(); $('#btnAdd').textContent='Add invoice'; $('#editing').textContent=''; $('#entrySummary').textContent='Add an invoice'; showFormFile(); motionWarn(); }
+function clearAuto(){ autoIds.forEach(id=>{ const el=$('#'+id); if(el) el.classList.remove('autofill'); }); autoIds=new Set(); }
+function setFormFile(f){ formFile=f; showFormFile(); if(typeof Reader!=='undefined') autoFill(f,false); }
+function ownABNs(){ const by={}; STATE.invoices.forEach(x=>(x.abns||[]).forEach(a=>{ (by[a]=by[a]||new Set()).add(norm(x.vendor)); })); return Object.keys(by).filter(a=>by[a].size>=2); }
+async function autoFill(file, force){
+  const st=$('#readStatus'); const isNew = editId==null;
+  st.innerHTML='<span class="spin"></span> Reading the invoice…';
+  let r;
+  try{ r=await Reader.readInvoice(file, {vendors:[...new Set(STATE.invoices.map(x=>x.vendor).filter(Boolean))], invoices:STATE.invoices, motions:STATE.motions, ownABNs:ownABNs()},
+        msg=>{ st.innerHTML='<span class="spin"></span> '+esc(msg); }); }
+  catch(e){ console.warn(e); st.innerHTML='<span class="rs warn">Couldn\'t read this file. Fill it in by hand.</span>'; return; }
+  if(formFile!==file) return;            // user moved on
+  const F=r.fields; formMeta={abn:F.abn, abns:F.abns};
+  const map={date:'#f-date',vendor:'#f-vendor',description:'#f-desc',po:'#f-po',invoiceNo:'#f-inv',gross:'#f-gross',gst:'#f-gst',motion:'#f-motion'};
+  const filled=[];
+  Object.entries(map).forEach(([k,sel])=>{
+    if(F[k]==null || F[k]==='') return;
+    const el=$(sel); const empty = el.value==='' || autoIds.has(el.id);
+    if(!(force || empty)) return;
+    if(k==='motion' && ![...el.options].some(o=>o.value===F[k])) return;
+    el.value = (k==='gross'||k==='gst')? Number(F[k]).toFixed(2) : F[k];
+    el.classList.add('autofill'); autoIds.add(el.id); filled.push(k);
+  });
+  if(F.stage && (isNew || force)){ $('#f-paid').value=F.stage; $('#f-paid').classList.add('autofill'); autoIds.add('f-paid'); filled.push('stage'); }
+  motionWarn();
+  const label={date:'date',vendor:'vendor',description:'description',po:'PO',invoiceNo:'invoice no.',gross:'total',gst:'GST',motion:'motion',stage:'stage'};
+  const missing=['date','vendor','invoiceNo','gross'].filter(k=>!filled.includes(k) && !$(map[k]).value).map(k=>label[k]);
+  let html= filled.length
+    ? '<span class="rs ok">Filled '+filled.map(k=>label[k]).join(', ')+(r.method==='ocr'?' (from a scan, so check carefully)':'')+'. Check the highlighted fields.</span>'
+    : '<span class="rs warn">Couldn\'t find the details in this file'+(r.method==='ocr'?' (scan was hard to read)':'')+'. Fill it in by hand.</span>';
+  const n=r.notes||{}; const extra=Object.entries(n).filter(([k])=>filled.includes(k)).map(([k,v])=>label[k]+': '+v);
+  if(extra.length) html+='<span class="rs note">'+esc(extra.join(' · '))+'</span>';
+  if(missing.length && filled.length) html+='<span class="rs note">Not found: '+esc(missing.join(', '))+'</span>';
+  // duplicate check
+  const inv=norm($('#f-inv').value), g=parseFloat($('#f-gross').value||0), v=norm($('#f-vendor').value);
+  const dup=STATE.invoices.findIndex((x,i)=> i!==editId && ((inv.length>=3 && norm(x.invoiceNo)===inv && (!v || norm(x.vendor)===v || Math.abs(Number(x.gross||0)-g)<0.01)) || (v && norm(x.vendor)===v && Math.abs(Number(x.gross||0)-g)<0.01 && x.date===$('#f-date').value)));
+  if(dup>=0){ const x=STATE.invoices[dup]; html+='<span class="rs dup">Looks like this is already in the register: '+esc(x.vendor)+' · '+esc(x.date)+' · '+money(x.gross)+' <button type="button" class="small" id="btnOpenDup">Open that row</button></span>'; }
+  st.innerHTML=html;
+  const od=$('#btnOpenDup'); if(od) od.onclick=()=>{ const keep=formFile; loadInvoice(dup); if(!STATE.invoices[dup].file || needsFile(STATE.invoices[dup],fileUses())){ formFile=keep; showFormFile(); $('#readStatus').innerHTML='<span class="rs note">The file will be attached to this row when you click Update.</span>'; } };
+}
 function showFormFile(){
   const cur = editId!=null && !formUnlink ? (STATE.invoices[editId].file||'') : '';
   const dz=$('#formDrop');
@@ -410,6 +451,7 @@ function showFormFile(){
   $('#btnPickFormFile').textContent = (formFile||cur)? 'Replace' : 'Choose file';
   $('#btnPreviewFormFile').hidden = !cur || !!formFile;
   $('#btnUnlinkFormFile').hidden = !(formFile||cur);
+  $('#btnReread').hidden = !formFile;
   dz.classList.toggle('has', !!(formFile||cur));
 }
 
@@ -632,6 +674,8 @@ function wireForms(){
     const prev = wasEdit? STATE.invoices[editId] : {};
     if(prev.msgSentDate) rec.msgSentDate=prev.msgSentDate; if(prev.msgPaidDate) rec.msgPaidDate=prev.msgPaidDate;
     setSent(rec,$('#f-sent').checked); if($('#f-reimb').checked) setReimb(rec,true);
+    rec.abn = formMeta.abn || prev.abn || ''; rec.abns = formMeta.abns || prev.abns || [];
+    if(!rec.abn) delete rec.abn; if(!rec.abns.length) delete rec.abns;
     if(rec.motion==='' ){ rec.msgSent=false; rec.msgPaid=false; delete rec.msgSentDate; delete rec.msgPaidDate; }
     let idx;
     if(wasEdit){ STATE.invoices[editId]=rec; idx=editId; } else { STATE.invoices.push(rec); idx=STATE.invoices.length-1; }
@@ -642,16 +686,21 @@ function wireForms(){
   };
   ['#f-motion','#f-gross'].forEach(id=>$(id).addEventListener('input',motionWarn));
   $('#btnGst').onclick=()=>{ const g=parseFloat($('#f-gross').value||0); $('#f-gst').value=g? (Math.round(g/11*100)/100).toFixed(2):''; };
-  $('#btnPickFormFile').onclick=async()=>{ const f=await pickFile(); if(f){ formFile=f; showFormFile(); } };
+  $('#btnPickFormFile').onclick=async()=>{ const f=await pickFile(); if(f) setFormFile(f); };
+  $('#btnReread').onclick=()=>{ if(formFile) autoFill(formFile,true); };
+  $$('#invForm input, #invForm select').forEach(el=>el.addEventListener('input',()=>{ el.classList.remove('autofill'); autoIds.delete(el.id); }));
   $('#btnPreviewFormFile').onclick=()=>{ if(editId!=null) openDoc(STATE.invoices[editId], editId); };
-  $('#btnUnlinkFormFile').onclick=()=>{ if(formFile) formFile=null; else formUnlink=true; showFormFile(); };
+  $('#btnUnlinkFormFile').onclick=()=>{ if(formFile){ formFile=null; $('#readStatus').innerHTML=''; } else formUnlink=true; showFormFile(); };
   const dz=$('#formDrop');
   dz.addEventListener('dragover',e=>{ e.preventDefault(); dz.classList.add('over'); });
   dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
-  dz.addEventListener('drop',e=>{ e.preventDefault(); dz.classList.remove('over'); const f=e.dataTransfer.files[0]; if(f){ formFile=f; showFormFile(); } });
+  dz.addEventListener('drop',e=>{ e.preventDefault(); e.stopPropagation(); dz.classList.remove('over'); const f=e.dataTransfer.files[0]; if(f) setFormFile(f); });
   // stop a stray drop elsewhere from navigating away from the app
   window.addEventListener('dragover',e=>e.preventDefault());
-  window.addEventListener('drop',e=>e.preventDefault());
+  // dropping an invoice anywhere else on the Register starts a new entry and reads it
+  window.addEventListener('drop',e=>{ e.preventDefault();
+    const f=e.dataTransfer && e.dataTransfer.files[0]; if(!f || !$('#register').classList.contains('active')) return;
+    if(editId!=null) clearForm(); setFormFile(f); $('#entry').open=true; window.scrollTo({top:0,behavior:'smooth'}); });
   $$('#chips .chip').forEach(b=>b.onclick=()=>{ regFilter=b.dataset.f; $$('#chips .chip').forEach(x=>x.classList.toggle('active',x===b)); renderRegister(); });
   $('#btnScan').onclick=scanFolder;
   $('#pvClose').onclick=closePreview;

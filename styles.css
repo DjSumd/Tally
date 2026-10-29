@@ -183,3 +183,12 @@ tr.overrow td.remain{color:var(--oxblood); font-weight:600}
 .age.mid{color:var(--amber); font-weight:600}
 .diff{color:var(--oxblood); font-weight:600}
 .card.warn{border-color:#f0d39a; background:var(--amber-tint)} .card.warn .v{color:var(--amber)}
+input.autofill,select.autofill{background:#fffbea; border-color:#e8cf7a}
+.readstatus{flex-basis:100%; display:flex; flex-direction:column; gap:4px; font-size:13px}
+.readstatus:empty{display:none}
+.rs.ok{color:var(--green); font-weight:600}
+.rs.warn{color:var(--amber); font-weight:600}
+.rs.note{color:var(--muted)}
+.rs.dup{color:var(--oxblood); font-weight:600; display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.spin{display:inline-block; width:12px; height:12px; border:2px solid var(--line); border-top-color:var(--brass); border-radius:50%; animation:sp .8s linear infinite; vertical-align:-2px; margin-right:4px}
+@keyframes sp{to{transform:rotate(360deg)}}
