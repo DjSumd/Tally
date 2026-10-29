@@ -1,5 +1,5 @@
 /* Tally service worker - bump CACHE when any cached file changes */
-const CACHE = 'tally-v3';
+const CACHE = 'tally-v4';
 const ASSETS = [
   './',
   './index.html',

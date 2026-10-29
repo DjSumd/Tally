@@ -199,12 +199,15 @@ function renderRegister(){
   let shown=0, tot=0;
   rows.forEach(({x,i})=>{
     tot+=Number(x.gross||0);
-    if(q){ const hay=norm([x.vendor,x.description,x.invoiceNo,x.motion,x.po].join(' ')); if(!hay.includes(q)) return; }
+    if(q){ const hay=norm([x.vendor,x.description,x.invoiceNo,x.motion,x.po,x.card].join(' ')); if(!hay.includes(q)) return; }
     shown++;
     const tr=document.createElement('tr');
     tr.innerHTML=`<td>${esc(x.date||'')}</td>
       <td class="clickable">${esc(x.vendor||'')}</td>
       <td class="clickable">${esc(x.description||'')}</td>
+      <td>${esc(x.po||'')}</td>
+      <td>${esc(x.invoiceNo||'')}</td>
+      <td>${esc(x.card||'')}</td>
       <td>${esc(x.motion||'')}</td>
       <td class="num">${money(x.gross)}</td>
       <td><span class="tag ${esc(x.docStatus||'')}">${esc(x.docStatus||'')}</span></td>
@@ -222,7 +225,7 @@ function renderRegister(){
 function loadInvoice(i){
   const x=STATE.invoices[i]; editId=i;
   $('#f-date').value=x.date||''; $('#f-vendor').value=x.vendor||''; $('#f-desc').value=x.description||'';
-  $('#f-po').value=x.po||''; $('#f-inv').value=x.invoiceNo||''; $('#f-motion').value=x.motion||'';
+  $('#f-po').value=x.po||''; $('#f-inv').value=x.invoiceNo||''; $('#f-card').value=x.card||''; $('#f-motion').value=x.motion||'';
   $('#f-gross').value=x.gross!=null?x.gross:''; $('#f-gst').value=x.gst!=null?x.gst:'';
   $('#f-doc').value=x.docStatus||'Documented'; $('#f-paid').value=String(!!x.paid); $('#f-notes').value=x.notes||'';
   $('#btnAdd').textContent='Update invoice'; $('#editing').textContent='editing row '+(i+1);
@@ -328,9 +331,10 @@ function wireForms(){
   $('#invForm').onsubmit=e=>{
     e.preventDefault();
     const rec={date:$('#f-date').value, vendor:$('#f-vendor').value.trim(), description:$('#f-desc').value.trim(),
-      po:$('#f-po').value.trim(), invoiceNo:$('#f-inv').value.trim(), motion:$('#f-motion').value,
+      po:$('#f-po').value.trim(), invoiceNo:$('#f-inv').value.trim(), card:$('#f-card').value.trim(), motion:$('#f-motion').value,
       gross:parseFloat($('#f-gross').value||0), gst:$('#f-gst').value?parseFloat($('#f-gst').value):null,
-      docStatus:$('#f-doc').value, paid:$('#f-paid').value==='true', notes:$('#f-notes').value.trim()};
+      docStatus:$('#f-doc').value, paid:$('#f-paid').value==='true', notes:$('#f-notes').value.trim(),
+      file: (editId!=null ? (STATE.invoices[editId].file||'') : '')};
     if(editId!=null){ STATE.invoices[editId]=rec; } else { STATE.invoices.push(rec); }
     markDirty(); clearForm(); renderAll(); toast(editId!=null?'Invoice updated':'Invoice added');
   };
@@ -425,9 +429,9 @@ function exportXlsx(){
     ['On track: remaining',alloc-(totalSpent-msgSpent)]];
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(bud),'Budget');
   // Register
-  const reg=[['Date','Vendor','Description','PO/Order','Invoice','MSG Motion','Gross','GST','Status','Paid','Notes']];
+  const reg=[['Date','Vendor','Description','PO','Invoice','Card','MSG Motion','Gross','GST','Status','Paid','Notes']];
   STATE.invoices.slice().sort((a,b)=>(a.date||'').localeCompare(b.date||'')).forEach(x=>
-    reg.push([x.date,x.vendor,x.description,x.po,x.invoiceNo,x.motion,x.gross,x.gst,x.docStatus,x.paid?'Paid':'Unpaid',x.notes]));
+    reg.push([x.date,x.vendor,x.description,x.po,x.invoiceNo,x.card,x.motion,x.gross,x.gst,x.docStatus,x.paid?'Paid':'Unpaid',x.notes]));
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(reg),'Register');
   // Motion tally
   const spent={}; STATE.invoices.forEach(x=>{ if(x.motion) spent[x.motion]=(spent[x.motion]||0)+Number(x.gross||0); });
